@@ -3,10 +3,10 @@
 
 ## [8RCKntW4LL]
 ### Инфо
-**Категория:** Crypto
-**Стоимость:** 100
-**Репозиторий:** https://github.com/andreika47/CyberZ1on
-**Автор:** andreika47
+**Категория:** Crypto<br>
+**Стоимость:** 100<br>
+**Репозиторий:** https://github.com/andreika47/CyberZ1on<br>
+**Автор:** andreika47<br>
 **Флаг:** cyzi{crypt0_h4s_y0u}
 ### Разбор
 Открыв файл с заданием *8RCKntW4LL_task.docx* увидим следующий шифртекст:
@@ -21,10 +21,10 @@ lII||I|I|l|l|l||II|I||l|ll|lIl|lI||II||I|||l||IIlIIlllII|||II||IIl|IlIIlIlll|lll
 
 ## [8R0F4]
 ### Инфо
-**Категория:** Web
-**Стоимость:** 200
-**Репозиторий:** https://github.com/andreika47/CyberZ1on
-**Автор:** andreika47
+**Категория:** Web<br>
+**Стоимость:** 200<br>
+**Репозиторий:** https://github.com/andreika47/CyberZ1on<br>
+**Автор:** andreika47<br>
 **Флаг:** cyzi{Zd4r0va_b4nd1ty}
 ### Разбор
 #### Password Challenge
@@ -37,7 +37,7 @@ lII||I|I|l|l|l||II|I||l|ll|lIl|lI||II||I|||l||IIlIIlllII|||II||IIl|IlIIlIlll|lll
 #### Cert Challenge
 Введя правильный логин и пароль, мы попадем на следующую страницу, где нас попросят показать сертификат. Попробуем разобраться как работает аутентификация: для начала выпустим какой-нибудь сертификат
 
-openssl req -x509 -newkey rsa:4096 -keyout somekey.pem -out somecert.pem
+    openssl req -x509 -newkey rsa:4096 -keyout somekey.pem -out somecert.pem
 
 И попробуем обратиться с этим сертификатом на эндпоинт с аутентификацией
 
@@ -150,7 +150,7 @@ openssl req -x509 -newkey rsa:4096 -keyout brother-key.pem -out brother-cert.pem
     </body>
     </html>
 
-Изучив код можно предположить, что это аутентификация по лицу. Обратим внимание на иконку сайта *images/brother-icon.png*
+Изучив код можно предположить, что это аутентификация по лицу. Обратим внимание на иконку сайта *images/brother-icon.png*<br>
 ![brother-icon.png](https://raw.githubusercontent.com/andreika47/CyberZ1on/refs/heads/main/Web/8R0F4/public/images/brother-icon.png)
 Снова вспомнив легенду CTF, попробовав увеличить расширение картинки или просто узнав героя фильмов "Брат" и "Брат 2" понимаем, что это Виктор Сухоруков. Попробуем передать его фотографию в качестве лица для аутентификации. Для этого можно просто показать фото в веб-камеру. Если ее нет, то придется детальнее изучить отправку фото от фронтенда к бэкенду через WebSocket.
 За передачу скриншота в коде фронтенда отвечает кусок кода ниже:
@@ -168,7 +168,7 @@ openssl req -x509 -newkey rsa:4096 -keyout brother-key.pem -out brother-cert.pem
 Метод [toDataURL](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL) преобразует изображение в строку следующего формата:
 
     data:[<media-type>][;base64],<data>
-Где `[media-type]` передается как аргумент в `canvas.toDataURL('image/jpeg')`, а `<data>` - кодированое в base64 изображение. Найдем фото актера, похожее на то, что используется в качестве иконки сайта: 
+Где `[media-type]` передается как аргумент в `canvas.toDataURL('image/jpeg')`, а `<data>` - кодированое в base64 изображение. Найдем фото актера, похожее на то, что используется в качестве иконки сайта: <br>
 ![Viktor_Sukhorukov_photo.jpg](https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/94df2fc6-7400-4bea-b587-e6c949e86e93/x178)
 
 Кодируем фотографию Виктора Сухорукова в base64
