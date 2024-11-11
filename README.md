@@ -151,7 +151,7 @@ openssl req -x509 -newkey rsa:4096 -keyout brother-key.pem -out brother-cert.pem
     </html>
 
 Изучив код можно предположить, что это аутентификация по лицу. Обратим внимание на иконку сайта *images/brother-icon.png*<br>
-![brother-icon.png](https://raw.githubusercontent.com/andreika47/CyberZ1on/refs/heads/main/Web/8R0F4/public/images/brother-icon.png)
+![brother-icon.png](https://raw.githubusercontent.com/andreika47/CyberZ1on/refs/heads/main/Web/8R0F4/public/images/brother-icon.png)<br>
 Снова вспомнив легенду CTF, попробовав увеличить расширение картинки или просто узнав героя фильмов "Брат" и "Брат 2" понимаем, что это Виктор Сухоруков. Попробуем передать его фотографию в качестве лица для аутентификации. Для этого можно просто показать фото в веб-камеру. Если ее нет, то придется детальнее изучить отправку фото от фронтенда к бэкенду через WebSocket.
 За передачу скриншота в коде фронтенда отвечает кусок кода ниже:
 
