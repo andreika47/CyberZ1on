@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BroFA: Face Challenge</title>
+    <link rel="icon" type="image/png" href="images/brother-icon.png">
+    <link rel="stylesheet" href="/css/style.css"> 
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1 style="color:#7F00FF;position:fixed; top:0;left:0;">BroFA: Face Challenge</h1>
+    <video id="video" style="position:absolute;justify-content: center;" autoplay></video>
+    <canvas id="c" style="position:fixed; top:0;left:0;z-index:-1;opacity:.95"></canvas>
+    <script>
+        const video = document.getElementById('video');
+        const socket = io();
+
+        navigator.mediaDevices.getUserMedia({ video: {} })
+            .then(stream => {
+                video.srcObject = stream;
+                video.play();
+            });
+
+        setInterval(() => {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0);
+            const dataUrl = canvas.toDataURL('image/jpeg');
+
+            if (dataUrl.length > 6) {
+                socket.emit('image', dataUrl);
+            }
+        }, 1000);
+
+        socket.on('results', (detections) => {
+            console.log('Detections:', detections);
+        });
+        socket.on('redirect', function(destination) {
+            window.location.href = destination;
+        });
+    </script>
+    <script>
+        var c = document.getElementById("c");
+        var ctx = c.getContext("2d");
+
+        c.height = window.innerHeight;
+        c.width = window.innerWidth;
+
+        var matrix = "Поживёшь подольше — увидишь побольше.";
+        matrix = matrix.split("");
+
+        var font_size = 10;
+        var columns = c.width/font_size;
+        var drops = [];
+
+        for(var x = 0; x < columns; x++)
+            drops[x] = 1; 
+
+        function draw()
+        {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+            ctx.fillRect(0, 0, c.width, c.height);
+
+            ctx.fillStyle = "#7F00FF";
+            ctx.font = font_size + "px arial";
+
+            for(var i = 0; i < drops.length; i++)
+            {
+                var text = matrix[Math.floor(Math.random()*matrix.length)];
+                ctx.fillText(text, i*font_size, drops[i]*font_size);
+
+                if(drops[i]*font_size > c.height && Math.random() > 0.975)
+                    drops[i] = 0;
+
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 35);
+    </script>
+</body>
+</html>

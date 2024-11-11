@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    command: npm start
+    volumes:
+      - .:/home/node/brofa/
+      - /home/node/brofa/node_modules
+    ports:
+      - "3000:3000"

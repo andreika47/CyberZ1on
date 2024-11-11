@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BroFA: Password Challenge</title>
+    <link rel="icon" type="image/png" href="/images/brother-icon.png">
+    <link rel="stylesheet" href="/css/style.css"> 
+</head>
+<body>
+    <h1 style="color:#7F00FF;position:fixed; top:0;left:0;">BroFA: Password Challenge</h1>
+    <canvas id="c" style="position:fixed; top:0;left:0;z-index:-1;opacity:.95"></canvas>
+    <section>
+        <div class="signin">            
+            <div class="content">
+                <h2>Login Form</h2>   
+                <div class="form">
+                    <form action="/login" method="POST">
+                        <div class="inputBox">
+                            <label for="username" class="form-label" style="color:white;">Username</label>
+                            <input type="text" class="form-control" id="username" name="username">                        
+                        </div>
+                        <div class="inputBox">
+                            <label for="password" class="form-label" style="color:white;">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                        <div class="inputBox">
+                            <button type="submit" class="btn btn-primary" style="color:white;">Submit</button>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    var c = document.getElementById("c");
+    var ctx = c.getContext("2d");
+
+    c.height = window.innerHeight;
+    c.width = window.innerWidth;
+
+    var matrix = "Поживёшь подольше — увидишь побольше.";
+    matrix = matrix.split("");
+
+    var font_size = 10;
+    var columns = c.width/font_size;
+    var drops = [];
+
+    for(var x = 0; x < columns; x++)
+        drops[x] = 1; 
+
+    function draw()
+    {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        ctx.fillStyle = "#7F00FF";
+        ctx.font = font_size + "px arial";
+
+        for(var i = 0; i < drops.length; i++)
+        {
+            var text = matrix[Math.floor(Math.random()*matrix.length)];
+            ctx.fillText(text, i*font_size, drops[i]*font_size);
+
+            if(drops[i]*font_size > c.height && Math.random() > 0.975)
+                drops[i] = 0;
+
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 35);
+</script>
+</html>
